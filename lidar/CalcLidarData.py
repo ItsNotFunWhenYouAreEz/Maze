@@ -23,7 +23,6 @@ def CalcLidarData(str):
     LSA = float(int(str[-8:-6]+str[-10:-8],16))/100
     TimeStamp = int(str[-4:-2]+str[-6:-4],16)
     CS = int(str[-2:],16)
-    print(LSA)
 
     Confidence_i = list()
     Angle_i = list()
@@ -37,9 +36,9 @@ def CalcLidarData(str):
     counter = 0
     circle = lambda deg : deg - 360 if deg >= 360 else deg
     for i in range(0,6*12,6): 
-        Distance_i.append(int(str[8+i+2:8+i+4] + str[8+i:8+i+2],16)/100)
+        Distance_i.append(round(int(str[8+i+2:8+i+4] + str[8+i:8+i+2],16)/10))
         Confidence_i.append(int(str[8+i+4:8+i+6],16))
-        Angle_i.append(circle(angleStep*counter+FSA)*math.pi/180.0)
+        Angle_i.append(circle(angleStep*counter+FSA))
         counter += 1
     
 

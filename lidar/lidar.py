@@ -22,27 +22,29 @@ lines = list()
 angles = list()
 distances = list()
 
+cnt = 0
 i = 0
+
 while True:
     loopFlag = True
     flag2c = False
 
-    if(i % 40 == 39):
-        if('line' in locals()):
-            line.remove()
-        line = ax.scatter(angles, distances, c="black", s=5)
-        ax.set_theta_offset(math.pi / 2)
-        plt.pause(0.01)
+    if(i  % 40 == 39):
+        i = 0
 
+        plt.pause(0.01)
+        angles =  [round(elem) for elem in angles ]
+        try :
+            print(distances[angles.index(1)])
+        except :
+            pass
         angles.clear()
         distances.clear()
-        i = 0
         
 
     while loopFlag:
         b = ser.read()
         tmpInt = int.from_bytes(b, 'big')
-        print(b)
         if (tmpInt == 0x54):
             tmpString +=  b.hex()+" "
             flag2c = True
@@ -52,7 +54,7 @@ while True:
             tmpString += b.hex()
 
             if(not len(tmpString[0:-5].replace(' ','')) == 90 ):
-                tmpString = ""
+                tmpString = "" 
                 loopFlag = False
                 flag2c = False
                 continue
@@ -63,12 +65,13 @@ while True:
 
             tmpString = ""
             loopFlag = False
+            cnt += len(lidarData.Distance_i)
+
         else:
             tmpString += b.hex()+" "
         
         flag2c = False
-        print(tmpString)
+    i += 1
 
-    i +=1
 
 ser.close()
