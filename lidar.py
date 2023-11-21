@@ -11,7 +11,7 @@ ax.set_title('lidar (exit: Key E)',fontsize=18)
 
 plt.connect('key_press_event', lambda event: exit(1) if event.key == 'e' else None)
 
-ser = serial.Serial(port='COM9',
+ser = serial.Serial(port='COM3',
                     baudrate=230400,
                     bytesize=8,
                     parity='N',
@@ -45,7 +45,7 @@ while True:
         line = ax.scatter(angles_radian, distances, c="pink", s=5)
 
         ax.set_theta_offset(math.pi / 2)
-        plt.pause(10)
+        plt.pause(0.01)
         angles.clear()
         distances.clear()
         
