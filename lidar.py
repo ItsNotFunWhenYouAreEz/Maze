@@ -34,16 +34,18 @@ while True:
         i = 0
 
         plt.pause(0.01)
+
         angles =  [round(elem) for elem in angles ]
-        try :
-            print(distances[angles.index(1)])
-            file = open("data.txt" , "a")
-            file.write(distances)
-            file.write("\n")
-            file.write(angles)
-            file.close()
-        except :
-            pass
+
+        angles_radian = [math.radians(x) for x in angles]
+
+        fig = plt.figure(figsize=(8,8))
+        ax = fig.add_subplot(111, projection='polar')
+        ax.set_title('lidar (exit: Key E)',fontsize=18)
+        line = ax.scatter(angles_radian, distances, c="pink", s=5)
+
+        ax.set_theta_offset(math.pi / 2)
+        plt.pause(10)
         angles.clear()
         distances.clear()
         
@@ -78,6 +80,8 @@ while True:
         
         flag2c = False
     i += 1
+
+
 
 
 ser.close()
